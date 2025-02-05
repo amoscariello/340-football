@@ -5,7 +5,7 @@ import './App.css';
 const Homepage = ({ leagues, onSelectLeague }) => {
   return (
     <div>
-      <h1 className="homepage-header">Football ELO Data & Predictions</h1>
+      <h1 className="homepage-header">340 - Football Stats & Predictions</h1>
       <div className="league-list">
         {leagues.map((league, index) => (
           <div key={index} className="league-card" onClick={() => onSelectLeague(league)}>
@@ -21,7 +21,7 @@ const Homepage = ({ leagues, onSelectLeague }) => {
 const LeagueTeams = ({ leagueName, leagueLogo, teams, onSelectTeam, onBack }) => {
   const [leaderboard, setLeaderboard] = useState([]);
 
-  const getLeaderboardFilename = (leagueName) => `/${leagueName.replace(/\s+/g, '-').toLowerCase()}-leaderboard.json`;
+  const getLeaderboardFilename = (leagueName) => `./data/${leagueName.replace(/\s+/g, '-').toLowerCase()}-leaderboard.json`;
   
   useEffect(() => {
     const fetchLeaderboard = async () => {
@@ -40,7 +40,7 @@ const LeagueTeams = ({ leagueName, leagueLogo, teams, onSelectTeam, onBack }) =>
     fetchLeaderboard();
   }, [leagueName]);
 
-  const getLogoFilename = (playerName) => `/images/${playerName.replace(/\s+/g, '-').toLowerCase()}-logo.png`;
+  const getLogoFilename = (playerName) => `./images/${playerName.replace(/\s+/g, '-').toLowerCase()}-logo.png`;
 
   return (
     <div className="league-page-header">
@@ -147,7 +147,7 @@ const BarChartComponent = ({ teamData, onBack }) => {
     }
   }, [positions]);
 
-  const getLogoFilename = (playerName) => `/images/${playerName.replace(/\s+/g, '-').toLowerCase()}-logo.png`;
+  const getLogoFilename = (playerName) => `./images/${playerName.replace(/\s+/g, '-').toLowerCase()}-logo.png`;
 
   return (
     <div className="team-page-header">
@@ -286,12 +286,11 @@ const BarChartComponent = ({ teamData, onBack }) => {
 
 const App = () => {
   const [leagues] = useState([
-    { name: 'Serie A', logo: '/images/serie-a-logo.png', dataFile: 'serie-a-data.json' },
-    { name: 'Premier League', logo: '/images/premier-league-logo.png', dataFile: 'premier-league-data.json' },
-    { name: 'La Liga', logo: '/images/la-liga-logo.png', dataFile: 'la-liga-data.json' },
-    { name: 'Bundesliga', logo: '/images/bundesliga-logo.png', dataFile: 'bundesliga-data.json' },
-    { name: 'Ligue 1', logo: '/images/ligue-1-logo.png', dataFile: 'ligue-1-data.json' },
-    { name: 'Meridiana League', logo: '/images/meridiana-league-logo.png', dataFile: 'meridiana-league-data.json' },
+    { name: 'Serie A', logo: './images/serie-a-logo.png'},
+    { name: 'Premier League', logo: './images/premier-league-logo.png' },
+    { name: 'La Liga', logo: './images/la-liga-logo.png' },
+    { name: 'Bundesliga', logo: './images/bundesliga-logo.png'},
+    { name: 'Ligue 1', logo: './images/ligue-1-logo.png'},
   ]);
   const [selectedLeague, setSelectedLeague] = useState(null);
   const [teams, setTeams] = useState([]);
@@ -299,7 +298,7 @@ const App = () => {
 
   useEffect(() => {
     if (selectedLeague) {
-      fetch(`/${selectedLeague.dataFile}`)
+      fetch(`./data/${selectedLeague.name.replace(/\s+/g, '-').toLowerCase()}-data.json`)
         .then((response) => response.json())
         .then((data) => setTeams(data))
         .catch((error) => console.error('Error fetching league data:', error));
