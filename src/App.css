@@ -109,6 +109,10 @@
   border-bottom: 1px solid #ddd;
 }
 
+.column-points {
+  font-weight: bold; 
+}
+
 .leaderboard-table th {
   background-color: #f2f2f2;
   font-weight: bold;
